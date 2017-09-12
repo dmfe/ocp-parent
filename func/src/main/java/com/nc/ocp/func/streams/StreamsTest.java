@@ -31,5 +31,8 @@ public class StreamsTest {
         Stream<String> stream = Stream.of("w", "o", "l", "f");
         String word = stream.reduce("", (s, c) -> s + c);
         log.info(word);
+
+        Stream<String> s = Stream.of("monkey", "gorilla", "bonobo");
+        s.map(String::length).forEach(log::info);
     }
 }
