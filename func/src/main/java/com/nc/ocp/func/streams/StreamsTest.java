@@ -9,6 +9,8 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalDouble;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class StreamsTest {
@@ -60,6 +62,7 @@ public class StreamsTest {
         peekChangingStateTest();
         java7example(Arrays.asList("Toby", "Andrew", "Goose", "Alex", "mike"));
         java8example(Arrays.asList("Toby", "Andrew", "Goose", "Alex", "mike"));
+        primitiveTest();
     }
 
     private void peekChangingStateTest() {
@@ -90,5 +93,16 @@ public class StreamsTest {
                 .sorted()
                 .limit(2)
                 .forEach(log::info);
+    }
+
+    private void primitiveTest() {
+        Stream<Integer> stream = Stream.of(1, 2, 3);
+        log.info(stream.reduce(0, (s, n) -> s += n));
+
+        IntStream intStream = IntStream.of(1, 2, 6);
+        OptionalDouble avg = intStream.average();
+        log.info("average: " + avg.getAsDouble());
+
+        
     }
 }
