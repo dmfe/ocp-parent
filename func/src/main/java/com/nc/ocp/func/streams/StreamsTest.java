@@ -8,9 +8,16 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalDouble;
+import java.util.TreeMap;
+import java.util.TreeSet;
+import java.util.function.BooleanSupplier;
+import java.util.stream.Collectors;
+import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 public class StreamsTest {
@@ -63,6 +70,11 @@ public class StreamsTest {
         java7example(Arrays.asList("Toby", "Andrew", "Goose", "Alex", "mike"));
         java8example(Arrays.asList("Toby", "Andrew", "Goose", "Alex", "mike"));
         primitiveTest();
+        funcInterfacesTestForPrimitives();
+        threeDigit(Optional.of(567));
+        threeDigitFunc(Optional.of(569));
+        collectorsTest();
+        collectingIntoMapsTest();
     }
 
     private void peekChangingStateTest() {
@@ -103,6 +115,86 @@ public class StreamsTest {
         OptionalDouble avg = intStream.average();
         log.info("average: " + avg.getAsDouble());
 
-        
+        LongStream longStream = LongStream.of(5, 10);
+        long sum = longStream.sum();
+        log.info("Long sum: " + sum);
+
+        DoubleStream doubleStream = DoubleStream.generate(() -> Math.PI);
+        OptionalDouble min = doubleStream.limit(5).min();
+        log.info("Double min: " + min.getAsDouble());
+    }
+
+    private void funcInterfacesTestForPrimitives() {
+        BooleanSupplier b1 = () -> true;
+        BooleanSupplier b2 = () -> Math.random() > .5;
+        log.info("Boolean supplier 1: " + b1.getAsBoolean());
+        log.info("Boolean supplier 2: " + b2.getAsBoolean());
+    }
+
+    private void threeDigit(Optional<Integer> optional) {
+        if(optional.isPresent()) {
+            Integer num = optional.get();
+            String str = "" + num;
+            if(str.length() == 3) {
+                log.info("three digit number: " + str);
+            }
+        }
+    }
+
+    private void threeDigitFunc(Optional<Integer> optional) {
+        optional.map(n -> n + "")
+                .filter(s -> s.length() == 3)
+                .ifPresent(v -> log.info("three digit number: " + v));
+    }
+
+    private void collectorsTest() {
+        Stream<String> ohMy = Stream.of("lions", "tigers", "bears");
+        String result = ohMy.collect(Collectors.joining(", "));
+        log.info("Oh my collection: " + result);
+
+        Stream<String> ohMy1 = Stream.of("lions", "tigers", "bears");
+        Double result1 = ohMy1.collect(Collectors.averagingInt(String::length));
+        log.info("Oh my collection: " + result1);
+
+        Stream<String> ohMy2 = Stream.of("lions", "tigers", "bears");
+        TreeSet<String> result2 = ohMy2.filter(s -> s.startsWith("t"))
+                .collect(Collectors.toCollection(TreeSet::new));
+        log.info("Collect ot tree set: " + result2);
+    }
+
+    private void collectingIntoMapsTest() {
+        Stream<String> ohMy1 = Stream.of("lions", "tigers", "bears");
+        Map<String, Integer> map1 = ohMy1.collect(
+                Collectors.toMap(s -> s, String::length)
+        );
+        log.info("Stream into map example 1: " + map1);
+
+        Stream<String> ohMy2 = Stream.of("lions", "tigers", "bears");
+        Map<Integer, String> map2 = ohMy2.collect(
+                Collectors.toMap(String::length, k -> k, (s1, s2) -> s1 + ", " + s2, TreeMap::new)
+        );
+        log.info("Stream into map example 2: " + map2 + ", map type: " + map2.getClass());
+
+        Stream<String> ohMy3 = Stream.of("lions", "tigers", "bears");
+        Map<Integer, List<String>> map3 = ohMy3.collect(
+                Collectors.groupingBy(String::length/*, TreeMap::new, Collectors.toSet()*/)
+        );
+        log.info("Stream into map example 3: " + map3 + ", map type: " + map3.getClass());
+
+        Stream<String> ohMy4 = Stream.of("lions", "tigers", "bears");
+        Map<Boolean, List<String>> map4 = ohMy4.collect(
+                Collectors.partitioningBy(s -> s.length() <= 5)
+        );
+        log.info("Stream into map example 4: " + map4);
+
+//        Stream<String> ohMy5 = Stream.of("lions", "tigers", "bears");
+//        Map<?, ?> map5 = ohMy5.collect(
+//                Collectors.groupingBy(
+//                        String::length,
+//                        Collectors.mapping(s -> s.charAt(0),
+//                                Collectors.minBy(Comparator.naturalOrder()))
+//                )
+//        );
+//        log.info("Stream into map example 5: " + map5);
     }
 }
