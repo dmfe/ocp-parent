@@ -1,5 +1,6 @@
 package com.nc.ocp.date_str_loc;
 
+import com.nc.ocp.date_str_loc.date.DateTest;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
@@ -13,5 +14,6 @@ public class Main {
 
     private void start() {
         log.info("Date, Strings, Localization tests...");
+        new DateTest().run();
     }
 }
