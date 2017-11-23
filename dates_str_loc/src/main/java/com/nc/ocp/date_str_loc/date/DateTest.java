@@ -14,6 +14,8 @@ public class DateTest {
 
     public void run() {
         instantiatingTest();
+        modificationTest();
+        periodTest();
     }
 
     private void instantiatingTest() {
@@ -49,5 +51,40 @@ public class DateTest {
 //        ZoneId.getAvailableZoneIds().stream().filter(z -> z.contains("Europe"))
 //                .sorted().forEach(log::info);
 
+    }
+
+    private void modificationTest() {
+        LocalDate date = LocalDate.of(2014, Month.JANUARY, 20);
+        log.info(date);
+        date = date.plusDays(2);
+        log.info(date);
+        date = date.plusWeeks(2);
+        log.info(date);
+        date = date.plusMonths(2);
+        log.info(date);
+        date = date.plusYears(1);
+        log.info(date);
+
+        LocalDate date1 = LocalDate.of(2020, Month.JANUARY, 20);
+        LocalTime time1 = LocalTime.of(5, 15);
+        LocalDateTime dateTime1 = LocalDateTime.of(date1, time1);
+        log.info(dateTime1);
+        dateTime1 = dateTime1.minusDays(2);
+        log.info(dateTime1);
+        dateTime1 = dateTime1.minusHours(3);
+        log.info(dateTime1);
+        dateTime1 = dateTime1.minusSeconds(30);
+        log.info(dateTime1);
+    }
+
+    private void periodTest() {
+        LocalDate start = LocalDate.of(2015, Month.JANUARY, 1);
+        LocalDate end = LocalDate.of(2015, Month.MARCH, 30);
+
+        LocalDate upTo = start;
+        while (upTo.isBefore(end)) {
+            log.info("give new toy: " + upTo);
+            upTo = upTo.plusMonths(1);
+        }
     }
 }
