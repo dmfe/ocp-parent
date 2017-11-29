@@ -21,7 +21,7 @@ public class DateTest {
         periodTest();
         durationTest();
         instantTest();
-        daylighSavingTest();
+        daylightSavingTest();
     }
 
     private void instantiatingTest() {
@@ -98,7 +98,7 @@ public class DateTest {
 
         log.info(date.plus(period));
         log.info(dateTime.plus(period));
-        log.info(time.plus(period));
+        //log.info(time.plus(period));
     }
 
     private void performEnimalEnrichment(LocalDate start, LocalDate end, Period period) {
@@ -134,7 +134,7 @@ public class DateTest {
         log.info(duration.toMillis());
     }
 
-    private void daylighSavingTest() {
+    private void daylightSavingTest() {
         LocalDate date = LocalDate.of(2016, Month.MARCH, 13);
         LocalTime time = LocalTime.of(1, 30);
         ZoneId zoneId = ZoneId.of("US/Eastern");
