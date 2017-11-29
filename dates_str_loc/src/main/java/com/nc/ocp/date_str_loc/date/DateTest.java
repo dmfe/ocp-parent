@@ -2,10 +2,12 @@ package com.nc.ocp.date_str_loc.date;
 
 import org.apache.log4j.Logger;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
+import java.time.Period;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
@@ -16,6 +18,7 @@ public class DateTest {
         instantiatingTest();
         modificationTest();
         periodTest();
+        durationTest();
     }
 
     private void instantiatingTest() {
@@ -81,10 +84,34 @@ public class DateTest {
         LocalDate start = LocalDate.of(2015, Month.JANUARY, 1);
         LocalDate end = LocalDate.of(2015, Month.MARCH, 30);
 
+        performEnimalEnrichment(start, end, Period.ofMonths(1));
+
+        log.info(Period.ofMonths(3));
+
+        LocalDate date = LocalDate.of(2015, 1, 20);
+        LocalTime time = LocalTime.of(6, 15);
+        LocalDateTime dateTime = LocalDateTime.of(date, time);
+        Period period = Period.ofMonths(1);
+
+        log.info(date.plus(period));
+        log.info(dateTime.plus(period));
+        log.info(time.plus(period));
+    }
+
+    private void performEnimalEnrichment(LocalDate start, LocalDate end, Period period) {
         LocalDate upTo = start;
         while (upTo.isBefore(end)) {
             log.info("give new toy: " + upTo);
-            upTo = upTo.plusMonths(1);
+            upTo = upTo.plus(period);
         }
+    }
+
+    private void durationTest() {
+        Duration daily = Duration.ofDays(1); log.info(daily);
+        Duration hourly = Duration.ofHours(1); log.info(hourly);
+        Duration everyMinute = Duration.ofMinutes(1); log.info(everyMinute);
+        Duration everyTenSeconds = Duration.ofSeconds(10); log.info(everyTenSeconds);
+        Duration everyMilli = Duration.ofMillis(1); log.info(everyMilli);
+        Duration everyNano = Duration.ofNanos(1); log.info(everyNano);
     }
 }
