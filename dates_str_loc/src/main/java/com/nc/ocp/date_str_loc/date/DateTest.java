@@ -3,6 +3,7 @@ package com.nc.ocp.date_str_loc.date;
 import org.apache.log4j.Logger;
 
 import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -19,6 +20,8 @@ public class DateTest {
         modificationTest();
         periodTest();
         durationTest();
+        instantTest();
+        daylighSavingTest();
     }
 
     private void instantiatingTest() {
@@ -113,5 +116,40 @@ public class DateTest {
         Duration everyTenSeconds = Duration.ofSeconds(10); log.info(everyTenSeconds);
         Duration everyMilli = Duration.ofMillis(1); log.info(everyMilli);
         Duration everyNano = Duration.ofNanos(1); log.info(everyNano);
+    }
+
+    private void instantTest() {
+        Instant now = Instant.now();
+        //some time consuming operations
+        for(int i = 0; i < 10; i++) {
+            try {
+                Thread.sleep(100);
+            } catch (Exception ex) {
+                log.info("Thread with id " + Thread.currentThread().getId() + " was interrupted.");
+            }
+        }
+        Instant later = Instant.now();
+
+        Duration duration = Duration.between(now, later);
+        log.info(duration.toMillis());
+    }
+
+    private void daylighSavingTest() {
+        LocalDate date = LocalDate.of(2016, Month.MARCH, 13);
+        LocalTime time = LocalTime.of(1, 30);
+        ZoneId zoneId = ZoneId.of("US/Eastern");
+        ZonedDateTime dateTime = ZonedDateTime.of(date, time, zoneId);
+
+        log.info(dateTime);
+        dateTime = dateTime.plusHours(1);
+        log.info(dateTime);
+
+        LocalDate date1 = LocalDate.of(2016, Month.NOVEMBER, 6);
+        LocalTime time1 = LocalTime.of(1, 30);
+        ZonedDateTime dateTime1 = ZonedDateTime.of(date1, time1, zoneId);
+
+        log.info(dateTime1);
+        dateTime1 = dateTime1.plusHours(1);
+        log.info(dateTime1);
     }
 }
