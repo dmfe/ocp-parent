@@ -112,7 +112,7 @@ public class InternationalAndLocalizationTest {
             double value = (Double) cf.parse(amt);
             log.info("currency value: " + value);
         } catch (ParseException ex) {
-            log.error("Currency parse exception.", ex);
+            log.error("Currency parse exceptions.", ex);
         }
 
         //DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse("");
