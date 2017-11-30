@@ -13,6 +13,7 @@
     <module>gen-col</module>
     <module>func</module>
     <module>dates_str_loc</module>
+    <module>exceptions</module>
   </modules>
 
   <properties>
