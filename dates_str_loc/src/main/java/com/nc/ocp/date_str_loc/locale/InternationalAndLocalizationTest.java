@@ -11,6 +11,7 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.Calendar;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -113,6 +114,9 @@ public class InternationalAndLocalizationTest {
         } catch (ParseException ex) {
             log.error("Currency parse exception.", ex);
         }
+
+        //DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse("");
+        //LocalDate date = LocalDate.of(2018, Calendar.JUNE, 40); // DateTimeException
     }
 
     private void localDateTimeTest() {
