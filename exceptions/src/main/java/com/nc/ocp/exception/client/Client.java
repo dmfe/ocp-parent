@@ -1,6 +1,8 @@
 package com.nc.ocp.exception.client;
 
 import com.nc.ocp.exception.data.Dolphin;
+import com.nc.ocp.exception.data.Turkey;
+import com.nc.ocp.exception.data.TurkeyCage;
 import com.nc.ocp.exception.exceptions.CannotSwimException;
 import org.apache.log4j.Logger;
 
@@ -36,6 +38,25 @@ public class Client {
             newApproachResourcesRelease(Paths.get(sourceFileName), Paths.get(destFileName));
         } catch (IOException ex) {
             throw new RuntimeException(ex);
+        }
+    }
+
+    public void turkeyAutoCloseableTest() {
+        try (Turkey turkey = new Turkey("Judith")) {
+            log.info("Turkey " + turkey.getName() + " is ready form processing...");
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public void supressionTest() {
+        try (TurkeyCage cage = new TurkeyCage()) {
+            throw new IllegalStateException("Exception during supression test");
+        } catch (IllegalStateException ex) {
+            log.error("Exception caught: " + ex.getMessage());
+            for(Throwable t : ex.getSuppressed()) {
+                log.error(t.getMessage());
+            }
         }
     }
 

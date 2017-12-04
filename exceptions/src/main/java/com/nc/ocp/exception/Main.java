@@ -1,6 +1,7 @@
 package com.nc.ocp.exception;
 
 import com.nc.ocp.exception.client.Client;
+import com.nc.ocp.exception.data.Assertions;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
@@ -20,6 +21,12 @@ public class Main {
         client.runClientCode();
         client.parseDateFromFile();
         client.copyFileContent("in.txt", "out.txt");
+        client.turkeyAutoCloseableTest();
+        client.supressionTest();
+
+        // Assertions test.
+        Assertions ass = new Assertions(10);
+        ass.printGuestsNumber();
     }
 
     private String getDataFromDatabase() throws SQLException {
