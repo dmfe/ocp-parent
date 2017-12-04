@@ -16,7 +16,10 @@ public class Main {
 
     private void start() {
         log.info("Exceptions test started...");
-        new Client().runClientCode();
+        Client client = new Client();
+        client.runClientCode();
+        client.parseDateFromFile();
+        client.copyFileContent("in.txt", "out.txt");
     }
 
     private String getDataFromDatabase() throws SQLException {
