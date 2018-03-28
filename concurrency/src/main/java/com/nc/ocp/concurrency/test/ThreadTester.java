@@ -1,6 +1,7 @@
 package com.nc.ocp.concurrency.test;
 
 import com.nc.ocp.concurrency.service.ModifiedCheckResults;
+import com.nc.ocp.concurrency.service.MultitaskTester;
 import com.nc.ocp.concurrency.service.ZooInfo;
 import com.nc.ocp.concurrency.work.CheckResults;
 import com.nc.ocp.concurrency.work.PrintData;
@@ -29,6 +30,10 @@ public class ThreadTester {
 
     private void execServiceTest() {
         new ZooInfo().run();
-        new ModifiedCheckResults().run();
+        //new ModifiedCheckResults().run();
+        new ModifiedCheckResults().alternativeRun();
+        MultitaskTester multitaskTester = new MultitaskTester();
+        multitaskTester.invokeAllTest();
+        multitaskTester.waitAllTasksTest();
     }
 }

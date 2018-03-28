@@ -14,7 +14,7 @@ public class Main {
     }
 
     private void run() throws InterruptedException {
-        log.info("Concurrency test application started...");
+        log.info("Concurrency invokeAllTest application started...");
         new ThreadTester().run();
     }
 }
