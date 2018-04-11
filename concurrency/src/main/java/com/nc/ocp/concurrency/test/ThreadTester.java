@@ -2,6 +2,7 @@ package com.nc.ocp.concurrency.test;
 
 import com.nc.ocp.concurrency.service.ModifiedCheckResults;
 import com.nc.ocp.concurrency.service.MultitaskTester;
+import com.nc.ocp.concurrency.service.SchedulingTester;
 import com.nc.ocp.concurrency.service.ZooInfo;
 import com.nc.ocp.concurrency.work.CheckResults;
 import com.nc.ocp.concurrency.work.PrintData;
@@ -14,6 +15,7 @@ public class ThreadTester {
         runThread();
         pollingTest();
         execServiceTest();
+        scheduleTest();
     }
 
     private void runRunnable() {
@@ -35,5 +37,9 @@ public class ThreadTester {
         MultitaskTester multitaskTester = new MultitaskTester();
         multitaskTester.invokeAllTest();
         multitaskTester.waitAllTasksTest();
+    }
+
+    private void scheduleTest() {
+        new SchedulingTester().run();
     }
 }
