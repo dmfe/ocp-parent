@@ -1,5 +1,6 @@
 package com.nc.ocp.concurrency;
 
+import com.nc.ocp.concurrency.test.SyncTester;
 import com.nc.ocp.concurrency.test.ThreadTester;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -16,5 +17,6 @@ public class Main {
     private void run() throws InterruptedException {
         log.info("Concurrency invokeAllTest application started...");
         new ThreadTester().run();
+        new SyncTester().run();
     }
 }
