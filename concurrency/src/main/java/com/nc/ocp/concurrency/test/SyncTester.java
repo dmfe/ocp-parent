@@ -14,6 +14,7 @@ public class SyncTester {
     public void run() {
         syncTest(new SheepManager());
         syncTest(new AtomicSheepManager());
+        syncTest(new SynchronizedSheepManager());
     }
 
     private void syncTest(AnimalManager manager) {
@@ -41,10 +42,6 @@ public class SyncTester {
         }
     }
 
-    private void syncTest() {
-
-    }
-
     private interface AnimalManager {
         void incrementAndReport();
         String getResult();
@@ -62,7 +59,8 @@ public class SyncTester {
 
         @Override
         public void incrementAndReport() {
-            result += (++count) + " ";
+            log.info(++count);
+            //result += (++count) + " ";
         }
     }
 
@@ -79,7 +77,27 @@ public class SyncTester {
 
         @Override
         public void incrementAndReport() {
-            result.set(result.get() + count.incrementAndGet() + " ");
+            log.info(count.incrementAndGet());
+            //result.set(result.get() + count.incrementAndGet() + " ");
+        }
+    }
+
+    private static class SynchronizedSheepManager implements AnimalManager {
+
+        private Integer count = 0;
+        private String result = "";
+
+        @Override
+        public String getResult() {
+            return result;
+        }
+
+        @Override
+        public void incrementAndReport() {
+            synchronized (this) {
+                log.info(++count);
+                //result += (++count) + " ";
+            }
         }
     }
 }
