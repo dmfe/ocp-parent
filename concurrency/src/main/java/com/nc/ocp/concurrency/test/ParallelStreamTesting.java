@@ -4,6 +4,7 @@ import lombok.extern.log4j.Log4j;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -14,6 +15,7 @@ public class ParallelStreamTesting {
         creatingTest();
         parallelStreamTest();
         whaleDataCalculationTest();
+        statefulTest();
     }
 
     private void creatingTest() {
@@ -33,6 +35,18 @@ public class ParallelStreamTesting {
         log.info("----------------------");
 
         Arrays.asList(1, 2, 3, 4, 5, 6).parallelStream().forEachOrdered(log::info);
+    }
+
+    private void statefulTest() {
+
+        List<Integer> data = Collections.synchronizedList(new ArrayList<>());
+        Arrays.asList(1, 2, 3, 4, 5, 6).parallelStream()
+                .map(i -> {data.add(i); return i;})
+                .forEachOrdered(log::info);
+
+        log.info("------");
+
+        data.forEach(log::info);
     }
 
     private void whaleDataCalculationTest() {
