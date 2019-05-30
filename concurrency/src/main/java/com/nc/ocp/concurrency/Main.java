@@ -19,10 +19,10 @@ public class Main {
 
     private void run() throws InterruptedException {
         log.info("Concurrency invokeAllTest application started...");
-        //new ThreadTester().run();
-        //new SyncTester().run();
-        //new ConcurrentCollectionsTester().run();
-        //new ParallelStreamTesting().run();
+        new ThreadTester().run();
+        new SyncTester().run();
+        new ConcurrentCollectionsTester().run();
+        new ParallelStreamTesting().run();
         new ManagingTesting().run();
     }
 }
