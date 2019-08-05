@@ -1,5 +1,6 @@
 package com.nc.ocp.concurrency;
 
+import com.nc.ocp.concurrency.forkjoin.ForkJoinSample;
 import com.nc.ocp.concurrency.test.ConcurrentCollectionsTester;
 import com.nc.ocp.concurrency.test.ManagingTesting;
 import com.nc.ocp.concurrency.test.ParallelStreamTesting;
@@ -24,5 +25,6 @@ public class Main {
         new ConcurrentCollectionsTester().run();
         new ParallelStreamTesting().run();
         new ManagingTesting().run();
+        new ForkJoinSample().run();
     }
 }
