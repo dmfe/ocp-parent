@@ -15,6 +15,7 @@
     <module>dates_str_loc</module>
     <module>exceptions</module>
     <module>concurrency</module>
+    <module>io</module>
   </modules>
 
   <properties>
