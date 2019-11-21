@@ -1,5 +1,7 @@
 package com.nc.ocp.io.stream;
 
+import com.nc.ocp.io.stream.copy.CopierType;
+import com.nc.ocp.io.stream.copy.FileCopier;
 import lombok.extern.log4j.Log4j;
 
 import java.io.BufferedReader;
@@ -14,7 +16,8 @@ public class StreamTest {
 
     public void run() {
         bufferedReaderTest();
-        copyFileTest();
+        byteCopyFileTest();
+        bufferedCopyFileTest();
     }
 
     private void bufferedReaderTest() {
@@ -25,9 +28,17 @@ public class StreamTest {
         }
     }
 
-    private void copyFileTest() {
-        new FileCopier(FILE_TO_COPY_NAME).copy();
-        log.info("File " + FILE_TO_COPY_NAME + " has been copied.");
-        new FileCopier(FILE_TO_COPY_NAME, "copy").copy();
+    private void byteCopyFileTest() {
+        FileCopier.builder(CopierType.BYTE)
+                .source(FILE_TO_COPY_NAME)
+                .build().copy();
+        log.info("File " + FILE_TO_COPY_NAME + " has been copied by using byte stream.");
+    }
+
+    private void bufferedCopyFileTest() {
+        FileCopier.builder(CopierType.BUFFERED)
+                .source(FILE_TO_COPY_NAME)
+                .build().copy();
+        log.info("File " + FILE_TO_COPY_NAME + " has been copied by using buffered stream.");
     }
 }
