@@ -13,7 +13,7 @@
     <name>io</name>
 
     <properties>
-        <project.src.maincl>com.nc.ocp.io.Main</project.src.maincl>
+        <project.src.main_class>com.nc.ocp.io.Main</project.src.main_class>
     </properties>
 
     <build>

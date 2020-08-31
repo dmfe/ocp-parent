@@ -13,7 +13,7 @@
   <name>design-patterns</name>
 
   <properties>
-    <project.src.maincl>com.nc.ocp.despat.Main</project.src.maincl>
+    <project.src.main_class>com.nc.ocp.despat.Main</project.src.main_class>
   </properties>
 
   <build>

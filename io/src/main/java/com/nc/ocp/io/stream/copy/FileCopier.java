@@ -2,7 +2,7 @@ package com.nc.ocp.io.stream.copy;
 
 import com.google.common.base.Preconditions;
 import org.apache.commons.lang3.StringUtils;
-import util.UUIDGenerator;
+import com.nc.ocp.io.util.UUIDGenerator;
 
 import java.io.File;
 

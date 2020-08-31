@@ -1,6 +1,6 @@
-**/.idea/**
-**/target/**
-**/logs/**
-**/test-dir/**
+**/.idea/
+**/target/
+**/logs/
+**/test-dir/
 *.iml
 *~*

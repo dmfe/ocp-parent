@@ -13,7 +13,7 @@
   <name>concurrency</name>
 
   <properties>
-    <project.src.maincl>com.nc.ocp.concurrency.Main</project.src.maincl>
+    <project.src.main_class>com.nc.ocp.concurrency.Main</project.src.main_class>
   </properties>
 
   <build>

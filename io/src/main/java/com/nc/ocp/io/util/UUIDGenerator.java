@@ -1,4 +1,4 @@
-package util;
+package com.nc.ocp.io.util;
 
 import java.util.UUID;
 
