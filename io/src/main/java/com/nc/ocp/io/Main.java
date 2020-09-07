@@ -1,6 +1,7 @@
 package com.nc.ocp.io;
 
 import com.nc.ocp.io.file.FileTest;
+import com.nc.ocp.io.serialization.SerdeTest;
 import com.nc.ocp.io.stream.StreamTest;
 import com.nc.ocp.io.text.TextTest;
 import lombok.extern.log4j.Log4j;
@@ -20,5 +21,6 @@ public class Main {
         new FileTest().run();
         new StreamTest().run();
         new TextTest().run();
+        new SerdeTest().run();
     }
 }
