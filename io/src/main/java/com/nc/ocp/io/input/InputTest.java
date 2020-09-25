@@ -10,6 +10,7 @@ public class InputTest {
     public void run() {
         oldWayInputTest();
         moderInputTest();
+        inputPasswordTest();
     }
 
     private void oldWayInputTest() {
@@ -22,5 +23,9 @@ public class InputTest {
 
     private void moderInputTest() {
         log.info("You entered the following: " + Input.modernInput());
+    }
+
+    private void inputPasswordTest() {
+        Input.passwordInput();
     }
 }
