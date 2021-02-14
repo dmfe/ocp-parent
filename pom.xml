@@ -16,12 +16,22 @@
     <module>exceptions</module>
     <module>concurrency</module>
     <module>io</module>
+    <module>nio</module>
   </modules>
 
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.log.directory>${project.basedir}/logs</project.log.directory>
-    <project.lib.prefix>lib</project.lib.prefix>
+      <java.version>11</java.version>
+      <maven.compiler.source>${java.version}</maven.compiler.source>
+      <maven.compiler.target>${java.version}</maven.compiler.target>
+
+      <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+      <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
+
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+      <project.log.directory>${project.basedir}/logs</project.log.directory>
+      <project.lib.prefix>lib</project.lib.prefix>
+
+      <lombok.version>1.18.16</lombok.version>
   </properties>
 
   <build>
@@ -30,9 +40,8 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
+          <version>${maven-compiler-plugin.version}</version>
           <configuration>
-            <source>1.8</source>
-            <target>1.8</target>
             <compilerArgument>-Xlint:all</compilerArgument>
             <showWarnings>true</showWarnings>
           </configuration>
@@ -40,6 +49,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
+          <version>${maven-jar-plugin.version}</version>
           <configuration>
             <archive>
               <manifest>
@@ -108,7 +118,7 @@
       <dependency>
         <groupId>org.projectlombok</groupId>
         <artifactId>lombok</artifactId>
-        <version>1.16.18</version>
+        <version>${lombok.version}</version>
       </dependency>
       <dependency>
         <groupId>junit</groupId>

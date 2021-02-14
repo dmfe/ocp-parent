@@ -4,7 +4,6 @@ import com.nc.ocp.gencol.add.Addition8Test;
 import com.nc.ocp.gencol.generics.GenericTest;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-import org.omg.CORBA.INTERNAL;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
