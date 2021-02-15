@@ -2,6 +2,7 @@
 **/target/
 **/logs/
 **/test-dir/
+**/test-data/
 **/.settings/
 **/.project
 **/.classpath
