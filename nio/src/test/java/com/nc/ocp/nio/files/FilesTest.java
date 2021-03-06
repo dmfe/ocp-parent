@@ -10,10 +10,13 @@ import com.nc.ocp.nio.exceptions.OcpNioException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 
 /**
  * FilesTest
  */
+@RunWith(JUnitPlatform.class)
 class FilesTest {
 
     private FilesSample fs = new FilesSample();
