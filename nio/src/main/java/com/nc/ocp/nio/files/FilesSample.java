@@ -34,4 +34,25 @@ public class FilesSample {
             throw new OcpNioException(msg, ex);
         }
     }
+
+    public void createDirectory(String dirName) {
+        try {
+            Files.createDirectory(Paths.get(dirName));
+        } catch(IOException ex) {
+            String msg = "Error while creation directory: " + ex.getLocalizedMessage();
+            log.error(msg, ex);
+            throw new OcpNioException(msg, ex);
+        }
+    }
+
+    public void createDirectories(String path) {
+        try {
+            Files.createDirectories(Paths.get(path));
+        } catch(IOException ex) {
+            String msg = "Error while creation directory: " + ex.getLocalizedMessage();
+            log.error(msg, ex);
+            throw new OcpNioException(msg, ex);
+        }
+    }
 }
+

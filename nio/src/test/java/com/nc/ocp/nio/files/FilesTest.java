@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.UUID;
+
 import com.nc.ocp.nio.exceptions.OcpNioException;
 
 import org.junit.jupiter.api.DisplayName;
@@ -78,6 +80,20 @@ class FilesTest {
             });
 
             assertEquals("Error while comparing files: test-data/horse/foot.txt", ex.getMessage());
+        }
+    }
+
+    @Nested
+    @DisplayName("Create directories")
+    class CreateDirectories {
+
+        @DisplayName("Create directory when parent directory exists")
+        @Test
+        void createDirectoryWhenParentExists() {
+            String dirName = UUID.randomUUID().toString();
+            fs.createDirectory("test-data/horse/" + dirName);
+
+            assertTrue(fs.checkFile("horse/" + dirName));
         }
     }
 }
