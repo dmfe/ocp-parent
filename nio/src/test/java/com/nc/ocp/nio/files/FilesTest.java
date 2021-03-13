@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
 import java.util.UUID;
 
 import com.nc.ocp.nio.exceptions.OcpNioException;
@@ -114,6 +115,16 @@ class FilesTest {
 
             assertTrue(fs.checkFile("horse/" + path));
         }
+    }
+
+    @DisplayName("Copy two files with buffered streams")
+    @Test
+    void copyTwoFiles() {
+        List<String> expectedText = List.of("This is the sample file", "blablablah");
+
+        fs.copyWithBufferedStreams();
+
+        assertEquals(expectedText, fs.readFile("test-data/horse/b"));
     }
 }
 
