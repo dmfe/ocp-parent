@@ -18,7 +18,7 @@ public class Main {
     }
 
     private void run() {
-        log.info("Strarting NIO Experiments...");
+        log.info("Starting NIO Experiments...");
 
         new PathsTest().run();
     }

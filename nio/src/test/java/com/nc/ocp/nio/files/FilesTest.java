@@ -25,7 +25,7 @@ class FilesTest {
     private FilesSample fs = new FilesSample();
 
     @Nested
-    @DisplayName("Check files existense")
+    @DisplayName("Check files existence")
     class CheckFilesExistence {
         @DisplayName("Directory exists")
         @Test
@@ -41,7 +41,7 @@ class FilesTest {
 
         @DisplayName("File doesn't exist")
         @Test
-        void fileDoesntExistsTest() {
+        void fileNotExistsTest() {
             assertFalse(fs.checkFile("horse/somefood.txt"));
         }
     }
