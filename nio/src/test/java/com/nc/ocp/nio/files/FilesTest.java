@@ -95,6 +95,25 @@ class FilesTest {
 
             assertTrue(fs.checkFile("horse/" + dirName));
         }
+
+        @DisplayName("Create directory when parent directory doesn't exist")
+        @Test
+        void createDirectoryWhenParentNotExists() {
+            OcpNioException ex = assertThrows(OcpNioException.class, () -> {
+                fs.createDirectory("test-data/something/ape");
+            });
+
+            assertEquals("Error while creation directory: test-data/something/ape", ex.getMessage());
+        }
+
+        @DisplayName("Create directories")
+        @Test
+        void createDirectories() {
+            String path = UUID.randomUUID().toString() + "/" + UUID.randomUUID().toString();
+            fs.createDirectories("test-data/horse/" + path);
+
+            assertTrue(fs.checkFile("horse/" + path));
+        }
     }
 }
 
