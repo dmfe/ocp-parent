@@ -7,6 +7,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.FileTime;
 import java.util.List;
 
 import com.nc.ocp.nio.exceptions.OcpNioException;
@@ -81,9 +82,36 @@ public class FilesSample {
         Path path = Paths.get(fileName);
 
         try {
+            // Be aware that entire file is read when readAllLines() is called(),
+            // with the resulting String array storing all of the contents of the
+            // file in memory at once. Therefore, if the file is significantly large,
+            // you may encounter an OutOfMemoryError trying to load all of it into
+            // memory.
             return Files.readAllLines(path, Charset.forName("UTF-16"));
         } catch (IOException ex) {
             String msg = "Error while reading file: " + ex.getLocalizedMessage();
+            log.error(ex);
+            throw new OcpNioException(msg, ex);
+        }
+    }
+
+    public void setLastModified(String fileName, long epochMillis) {
+        try {
+            Path path = Paths.get(fileName);
+            Files.setLastModifiedTime(path, FileTime.fromMillis(epochMillis));
+        } catch (IOException ex) {
+            String msg = "Error while setting last modified time: " + ex.getLocalizedMessage();
+            log.error(ex);
+            throw new OcpNioException(msg, ex);
+        }
+    }
+
+    public Long getLastModified(String fileName) {
+        try {
+            Path path = Paths.get(fileName);
+            return Files.getLastModifiedTime(path).toMillis();
+        } catch (IOException ex) {
+            String msg = "Error while getting last modified time: " + ex.getLocalizedMessage();
             log.error(ex);
             throw new OcpNioException(msg, ex);
         }

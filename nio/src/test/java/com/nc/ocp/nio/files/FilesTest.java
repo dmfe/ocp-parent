@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
@@ -125,6 +127,18 @@ class FilesTest {
         fs.copyWithBufferedStreams();
 
         assertEquals(expectedText, fs.readFile("test-data/horse/b"));
+    }
+
+    @DisplayName("Set last modified time.")
+    @Test
+    void setLastModifiedTest() {
+
+        Long currentMillis = System.currentTimeMillis();
+        String fileName = "test-data/horse/food.txt";
+
+        fs.setLastModified(fileName, currentMillis);
+
+        assertEquals(currentMillis, fs.getLastModified(fileName));
     }
 }
 
