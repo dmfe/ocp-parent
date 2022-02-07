@@ -8,26 +8,30 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.FileTime;
+import java.nio.file.attribute.PosixFileAttributes;
+import java.nio.file.attribute.PosixFilePermission;
+import java.nio.file.attribute.UserPrincipal;
 import java.util.List;
 
 import com.nc.ocp.nio.exceptions.OcpNioException;
 
+import java.util.Set;
 import lombok.extern.log4j.Log4j;
 
 /**
  * Files
  */
 @Log4j
-public class FilesSample {
+class FilesSample {
 
     private static final String DATA_FOLDER = "./test-data";
 
-    public boolean checkFile(String resource) {
+    boolean checkFile(String resource) {
         Path cpData = Paths.get(DATA_FOLDER + "/" + resource);
         return Files.exists(cpData);
     }
 
-    public boolean isSameFiles(String fileOne, String fileTwo) {
+    boolean isSameFiles(String fileOne, String fileTwo) {
         try {
             Path first = Paths.get(fileOne);
             Path second = Paths.get(fileTwo);
@@ -40,7 +44,7 @@ public class FilesSample {
         }
     }
 
-    public void createDirectory(String dirName) {
+    void createDirectory(String dirName) {
         try {
             Files.createDirectory(Paths.get(dirName));
         } catch(IOException ex) {
@@ -50,7 +54,7 @@ public class FilesSample {
         }
     }
 
-    public void createDirectories(String path) {
+    void createDirectories(String path) {
         try {
             Files.createDirectories(Paths.get(path));
         } catch(IOException ex) {
@@ -60,7 +64,7 @@ public class FilesSample {
         }
     }
 
-    public void copyWithBufferedStreams() {
+    void copyWithBufferedStreams() {
         Path source = Paths.get("test-data/horse/a");
         Path dest = Paths.get("test-data/horse/b");
 
@@ -78,7 +82,7 @@ public class FilesSample {
         }
     }
 
-    public List<String> readFile(String fileName) {
+    List<String> readFile(String fileName) {
         Path path = Paths.get(fileName);
 
         try {
@@ -95,7 +99,7 @@ public class FilesSample {
         }
     }
 
-    public void setLastModified(String fileName, long epochMillis) {
+    void setLastModified(String fileName, long epochMillis) {
         try {
             Path path = Paths.get(fileName);
             Files.setLastModifiedTime(path, FileTime.fromMillis(epochMillis));
@@ -106,12 +110,33 @@ public class FilesSample {
         }
     }
 
-    public Long getLastModified(String fileName) {
+    Long getLastModified(String fileName) {
         try {
             Path path = Paths.get(fileName);
             return Files.getLastModifiedTime(path).toMillis();
         } catch (IOException ex) {
             String msg = "Error while getting last modified time: " + ex.getLocalizedMessage();
+            log.error(ex);
+            throw new OcpNioException(msg, ex);
+        }
+    }
+
+    void setOwner(String fileName, String ownerName) {
+        try {
+            Path path = Paths.get(fileName);
+            Files.createFile(path);
+            log.info(fileName + " created (owner: " + Files.getOwner(path).getName() + ")");
+
+            Set<PosixFilePermission> perms = Files.readAttributes(path, PosixFileAttributes.class).permissions();
+            perms.add(PosixFilePermission.GROUP_WRITE);
+            perms.add(PosixFilePermission.OTHERS_WRITE);
+            Files.setPosixFilePermissions(path, perms);
+
+            UserPrincipal owner = path.getFileSystem().getUserPrincipalLookupService().lookupPrincipalByName(ownerName);
+            Files.setOwner(path, owner);
+            log.info(fileName + " changed owner (owner: " + Files.getOwner(path).getName() + ")");
+        } catch (IOException ex) {
+            String msg = "Error while setting owner: " + ex.getLocalizedMessage();
             log.error(ex);
             throw new OcpNioException(msg, ex);
         }

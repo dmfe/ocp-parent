@@ -5,8 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.UserPrincipal;
 import java.util.List;
 import java.util.UUID;
 
@@ -133,12 +137,28 @@ class FilesTest {
     @Test
     void setLastModifiedTest() {
 
-        Long currentMillis = System.currentTimeMillis();
+        long currentMillis = System.currentTimeMillis();
         String fileName = "test-data/horse/food.txt";
 
         fs.setLastModified(fileName, currentMillis);
 
         assertEquals(currentMillis, fs.getLastModified(fileName));
+    }
+
+    @DisplayName("Set owner.")
+    @Test
+    void setOwnerTest() throws Exception {
+        String fileName = "test-data/chicken/feathers_" + UUID.randomUUID().toString() + ".txt";
+        String ownerName = "nobody";
+
+        UserPrincipal expectedOwner = FileSystems.getDefault().getUserPrincipalLookupService()
+                .lookupPrincipalByName(ownerName);
+
+        fs.setOwner(fileName, ownerName);
+        Path path = Paths.get(fileName);
+        UserPrincipal actualOwner = Files.getOwner(path);
+
+        assertEquals(expectedOwner, actualOwner);
     }
 }
 
