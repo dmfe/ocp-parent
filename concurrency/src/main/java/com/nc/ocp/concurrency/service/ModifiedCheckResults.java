@@ -1,16 +1,15 @@
 package com.nc.ocp.concurrency.service;
 
-import org.apache.log4j.Logger;
-
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class ModifiedCheckResults {
-    private static final Logger LOG = Logger.getLogger(ModifiedCheckResults.class);
     private static int counter = 0;
 
     public void run() {
@@ -18,32 +17,31 @@ public class ModifiedCheckResults {
         try {
             service = Executors.newSingleThreadExecutor();
             Future<String> result = service.submit(() -> {
-                for(int i = 0; i < 11000; i++) {
+                for (int i = 0; i < 11000; i++) {
                     ModifiedCheckResults.counter++;
                     try {
                         Thread.sleep(1);
                     } catch (InterruptedException e) {
-                        LOG.error("Counter thread was interrupted: ", e);
+                        log.error("Counter thread was interrupted: ", e);
                         break;
                     }
                 }
                 return "WAY POINT REACHED!";
             });
 
-            while(!result.isDone()) {
+            while (!result.isDone()) {
                 try {
-                    LOG.info("Not reached...");
+                    log.info("Not reached...");
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
-                    LOG.error("Waiting thread was interrupted: ", e);
+                    log.error("Waiting thread was interrupted: ", e);
                 }
             }
-            LOG.info(result.get());
+            log.info(result.get());
         } catch (InterruptedException | ExecutionException e) {
-            LOG.error("Exception occur while waiting thread result: ", e);
-        }
-        finally {
-            if(service != null) service.shutdown();
+            log.error("Exception occur while waiting thread result: ", e);
+        } finally {
+            if (service != null) service.shutdown();
         }
     }
 
@@ -53,24 +51,24 @@ public class ModifiedCheckResults {
             service = Executors.newSingleThreadExecutor();
             Future<String> result = service.submit(() -> {
                 int i = 0;
-                while(i < 1000) {
+                while (i < 1000) {
                     ModifiedCheckResults.counter++;
                     try {
                         Thread.sleep(1);
                     } catch (InterruptedException e) {
-                        LOG.error("Counter thread was interrupted: ", e);
+                        log.error("Counter thread was interrupted: ", e);
                         break;
                     }
                     i++;
                 }
                 return "ALTERNATIVE WAY POINT REACHED!";
             });
-            LOG.info("Task submitted.");
-            LOG.info(result.get(10, TimeUnit.SECONDS));
-        } catch (TimeoutException e ) {
-            LOG.error("Timeout: ", e);
-        } catch(ExecutionException | InterruptedException e) {
-            LOG.error("Exception occur while waiting thread result: ", e);
+            log.info("Task submitted.");
+            log.info(result.get(10, TimeUnit.SECONDS));
+        } catch (TimeoutException e) {
+            log.error("Timeout: ", e);
+        } catch (ExecutionException | InterruptedException e) {
+            log.error("Exception occur while waiting thread result: ", e);
         } finally {
             if (service != null) service.shutdown();
         }

@@ -1,11 +1,10 @@
 package com.nc.ocp.concurrency.test;
 
-import lombok.extern.log4j.Log4j;
-
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
+import lombok.extern.slf4j.Slf4j;
 
-@Log4j
+@Slf4j
 public class CoordinatedLionPenManager {
 
     private void removeAnimals() {

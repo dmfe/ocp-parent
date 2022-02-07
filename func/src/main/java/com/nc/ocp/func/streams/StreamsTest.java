@@ -1,7 +1,5 @@
 package com.nc.ocp.func.streams;
 
-import org.apache.log4j.Logger;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,9 +17,10 @@ import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class StreamsTest {
-    private static final Logger log = Logger.getLogger(StreamsTest.class);
 
     public void run() {
 //        Stream<Double> randoms = Stream.generate(Math::random);
@@ -48,7 +47,7 @@ public class StreamsTest {
         log.info(word);
 
         Stream<String> s = Stream.of("monkey", "gorilla", "bonobo");
-        s.map(String::length).forEach(log::info);
+        s.map(String::length).forEach(str -> log.info("{}", str));
 
         List<String> one = Arrays.asList();
         List<String> two = Arrays.asList("Bonobo");
@@ -83,20 +82,20 @@ public class StreamsTest {
         Collections.addAll(numbers, 1, 20, 50);
         Collections.addAll(letters, 'a', 'd');
         Stream<List<?>> stream = Stream.of(numbers, letters);
-        stream.peek(l -> l.remove(0)).map(List::size).forEach(log::info);
+        stream.peek(l -> l.remove(0)).map(List::size).forEach(size -> log.info("{}", size));
     }
 
     // This is the comparasion of how we can implement the same functional in j7 and j8.
     // We need to get first two names alphabetically that are four characters long.
     private void java7example(List<String> names) {
         List<String> filtered = new ArrayList<>();
-        for(String name : names) {
-            if(name.length() == 4) filtered.add(name);
+        for (String name : names) {
+            if (name.length() == 4) filtered.add(name);
         }
         Collections.sort(filtered);
         Iterator<String> iter = filtered.iterator();
-        if(iter.hasNext()) log.info(iter.next());
-        if(iter.hasNext()) log.info(iter.next());
+        if (iter.hasNext()) log.info(iter.next());
+        if (iter.hasNext()) log.info(iter.next());
     }
 
     private void java8example(List<String> names) {
@@ -109,7 +108,7 @@ public class StreamsTest {
 
     private void primitiveTest() {
         Stream<Integer> stream = Stream.of(1, 2, 3);
-        log.info(stream.reduce(0, (s, n) -> s += n));
+        log.info("{}", stream.reduce(0, (s, n) -> s += n));
 
         IntStream intStream = IntStream.of(1, 2, 6);
         OptionalDouble avg = intStream.average();
@@ -132,10 +131,10 @@ public class StreamsTest {
     }
 
     private void threeDigit(Optional<Integer> optional) {
-        if(optional.isPresent()) {
+        if (optional.isPresent()) {
             Integer num = optional.get();
             String str = "" + num;
-            if(str.length() == 3) {
+            if (str.length() == 3) {
                 log.info("three digit number: " + str);
             }
         }

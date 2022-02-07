@@ -3,13 +3,13 @@ package com.nc.ocp.io.stream;
 import com.nc.ocp.io.stream.copy.CopierType;
 import com.nc.ocp.io.stream.copy.FileCopier;
 import com.nc.ocp.io.stream.writer.PrintWriterLogger;
-import lombok.extern.log4j.Log4j;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import lombok.extern.slf4j.Slf4j;
 
-@Log4j
+@Slf4j
 public class StreamTest {
 
     private static final String TEST_FILE_NAME = "./test-dir/test.txt";

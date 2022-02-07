@@ -1,8 +1,8 @@
 package com.nc.ocp.concurrency.test;
 
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 
-@Log4j
+@Slf4j
 public class LionPenManager {
 
     private void removeAnimals() {
@@ -17,7 +17,7 @@ public class LionPenManager {
         log.info("Adding animals");
     }
 
-    public void performTask() {
+    void performTask() {
         removeAnimals();
         cleanPen();
         addAnimals();

@@ -1,7 +1,5 @@
 package com.nc.ocp.date_str_loc.locale;
 
-import org.apache.log4j.Logger;
-
 import java.text.MessageFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -11,12 +9,12 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.Calendar;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class InternationalAndLocalizationTest {
-    private static final Logger log = Logger.getLogger(InternationalAndLocalizationTest.class);
 
     public void run() {
         localeTest();
@@ -32,16 +30,16 @@ public class InternationalAndLocalizationTest {
         Locale currentLocale = Locale.getDefault();
         log.info("Current locale: " + currentLocale);
 
-        log.info(Locale.GERMAN);
-        log.info(Locale.GERMANY);
-        log.info(new Locale("fr"));
-        log.info(new Locale("hi", "IN"));
+        log.info("{}", Locale.GERMAN);
+        log.info("{}", Locale.GERMANY);
+        log.info("{}", new Locale("fr"));
+        log.info("{}", new Locale("hi", "IN"));
 
         // Builder pattern
         Locale l1 = new Locale.Builder()
                 .setLanguage("en")
                 .setRegion("US").build();
-        log.info(l1);
+        log.info("{}", l1);
 
         Locale l2 = new Locale.Builder()
                 .setLanguage("hi")
@@ -79,7 +77,7 @@ public class InternationalAndLocalizationTest {
                 "com.nc.ocp.date_str_loc.locale.resourcebundles.Tax",
                 Locale.US);
         log.info(rb.getObject("tax").toString());
-        log.info(((UsTaxCode)rb.getObject("tax")).getCode());
+        log.info("{}", ((UsTaxCode) rb.getObject("tax")).getCode());
     }
 
     private void formatTest() {

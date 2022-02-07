@@ -4,8 +4,6 @@ import com.nc.ocp.exception.data.Dolphin;
 import com.nc.ocp.exception.data.Turkey;
 import com.nc.ocp.exception.data.TurkeyCage;
 import com.nc.ocp.exception.exceptions.CannotSwimException;
-import org.apache.log4j.Logger;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -15,16 +13,17 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class Client {
-    private static final Logger log = Logger.getLogger(Client.class);
 
     public void runClientCode() {
         Dolphin dolphin = new Dolphin();
         log.info("Dolphin created.");
         try {
             dolphin.swim();
-        } catch(CannotSwimException ex) {
+        } catch (CannotSwimException ex) {
             log.error("Error during client work.", ex);
         }
     }
@@ -54,7 +53,7 @@ public class Client {
             throw new IllegalStateException("Exception during supression test");
         } catch (IllegalStateException ex) {
             log.error("Exception caught: " + ex.getMessage());
-            for(Throwable t : ex.getSuppressed()) {
+            for (Throwable t : ex.getSuppressed()) {
                 log.error(t.getMessage());
             }
         }
@@ -66,13 +65,13 @@ public class Client {
             Path path = Paths.get("dolphinsBorn.txt");
             String text = new String(Files.readAllBytes(path));
             LocalDate date = LocalDate.parse(text);
-            log.info(date);
+            log.info("{}", date);
         } catch (DateTimeParseException ex) {
-            log.error(ex);
+            log.error("error during parsing datetime: {}", ex.getLocalizedMessage(), ex);
             throw new RuntimeException(ex);
         } catch (IOException ex) {
-            log.error(ex);
-            throw new RuntimeException(ex);
+            log.error("Input/Output exception: {}", ex.getLocalizedMessage(), ex);
+            throw new RuntimeException("Input/Output exception: " + ex.getLocalizedMessage(), ex);
         }
     }
 
@@ -83,9 +82,9 @@ public class Client {
             Path path = Paths.get("dolphinsBorn.txt");
             String text = new String(Files.readAllBytes(path));
             LocalDate date = LocalDate.parse(text);
-            log.info(date);
+            log.info("{}", date);
         } catch (Exception ex) { // BAD Approach!
-            log.error(ex);
+            log.error("{}", ex.getLocalizedMessage(), ex);
             throw new RuntimeException(ex);
         }
     }
@@ -96,7 +95,7 @@ public class Client {
             Path path = Paths.get("dolphinsBorn.txt");
             String text = new String(Files.readAllBytes(path));
             LocalDate date = LocalDate.parse(text);
-            log.info(date);
+            log.info("{}", date);
         } catch (DateTimeParseException ex) {
             handleException(ex);
         } catch (IOException ex) {
@@ -105,7 +104,7 @@ public class Client {
     }
 
     private static void handleException(Exception e) {
-        log.error(e);
+        log.error("{}", e.getLocalizedMessage(), e);
         throw new RuntimeException(e);
     }
 
@@ -116,9 +115,9 @@ public class Client {
             String text = new String(Files.readAllBytes(path));
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             LocalDate date = LocalDate.parse(text, dtf);
-            log.info(date);
+            log.info("{}", date);
         } catch (DateTimeParseException | IOException ex) {
-            log.error(ex);
+            log.error("", ex.getLocalizedMessage(), ex);
             throw new RuntimeException(ex);
         }
     }
@@ -131,14 +130,14 @@ public class Client {
             out = Files.newBufferedWriter(path2);
             out.write(in.readLine());
         } finally {
-            if(in != null) in.close();   // If IOException will be thrown here,
-            if(out != null) out.close(); // then out.close() will never be executed.
+            if (in != null) in.close();   // If IOException will be thrown here,
+            if (out != null) out.close(); // then out.close() will never be executed.
         }
     }
 
     private void newApproachResourcesRelease(Path path1, Path path2) throws IOException {
-        try(BufferedReader in = Files.newBufferedReader(path1);
-            BufferedWriter out = Files.newBufferedWriter(path2)) {
+        try (BufferedReader in = Files.newBufferedReader(path1);
+             BufferedWriter out = Files.newBufferedWriter(path2)) {
             out.write(in.readLine());
         }
     }

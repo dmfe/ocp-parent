@@ -1,12 +1,11 @@
 package com.nc.ocp.concurrency.test;
 
-import lombok.extern.log4j.Log4j;
-
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import lombok.extern.slf4j.Slf4j;
 
-@Log4j
+@Slf4j
 public class ManagingTesting {
 
     private static final int WORKERS_COUNT = 4;
@@ -24,7 +23,7 @@ public class ManagingTesting {
 
             LionPenManager lionPenManager = new LionPenManager();
 
-            for(int i = 0; i < WORKERS_COUNT; i++) {
+            for (int i = 0; i < WORKERS_COUNT; i++) {
                 executorService.submit(lionPenManager::performTask);
             }
         } finally {
@@ -45,7 +44,7 @@ public class ManagingTesting {
             CyclicBarrier c1 = new CyclicBarrier(WORKERS_COUNT, () -> log.info("*** Animals removed!"));
             CyclicBarrier c2 = new CyclicBarrier(WORKERS_COUNT, () -> log.info("*** Pen cleaned!"));
 
-            for(int i = 0; i < WORKERS_COUNT; i++) {
+            for (int i = 0; i < WORKERS_COUNT; i++) {
                 executorService.submit(() -> lionPenManager.performTask(c1, c2));
             }
         } finally {

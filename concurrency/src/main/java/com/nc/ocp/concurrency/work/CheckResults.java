@@ -1,9 +1,9 @@
 package com.nc.ocp.concurrency.work;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class CheckResults {
-    private static final Logger LOG = Logger.getLogger(CheckResults.class);
 
     private static int counter = 0;
 
@@ -13,9 +13,9 @@ public class CheckResults {
         }).start();
 
         while (CheckResults.counter < 15000) {
-            LOG.info("Not reached yet.");
+            log.info("Not reached yet.");
             Thread.sleep(1000);
         }
-        LOG.info("Reached!");
+        log.info("Reached!");
     }
 }

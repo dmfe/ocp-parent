@@ -1,14 +1,13 @@
 package com.nc.ocp.io.stream.writer;
 
-import lombok.extern.log4j.Log4j;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import lombok.extern.slf4j.Slf4j;
 
-@Log4j
+@Slf4j
 public final class PrintWriterLogger {
 
     private static final String LOG_FILE_NAME = "./test-dir/zoo.log";

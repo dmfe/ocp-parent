@@ -1,12 +1,12 @@
 package com.nc.ocp.concurrency.work;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class ReadInventoryThread extends Thread {
-    private static final Logger LOG = Logger.getLogger(ReadInventoryThread.class);
 
     @Override
     public void run() {
-        LOG.info("Printing zoo inventory...");
+        log.info("Printing zoo inventory...");
     }
 }

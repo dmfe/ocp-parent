@@ -1,13 +1,13 @@
 package com.nc.ocp.io.text;
 
 import com.nc.ocp.io.text.rw.BufferedTextCopier;
-import lombok.extern.log4j.Log4j;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
-@Log4j
+@Slf4j
 public class TextTest {
     private static final String SOURCE_FILE = "./test-dir/test.txt";
     private static final String DESTINATION_FILE = "./test-dir/test_copy.txt";

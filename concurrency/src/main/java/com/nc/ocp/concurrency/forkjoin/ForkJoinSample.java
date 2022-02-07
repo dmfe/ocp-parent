@@ -1,13 +1,12 @@
 package com.nc.ocp.concurrency.forkjoin;
 
-import lombok.extern.log4j.Log4j;
-
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import lombok.extern.slf4j.Slf4j;
 
-@Log4j
+@Slf4j
 public class ForkJoinSample {
     private static final int ANIMALS_NUMBER = 10;
 

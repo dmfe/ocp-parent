@@ -1,7 +1,5 @@
 package com.nc.ocp.concurrency.service;
 
-import lombok.extern.log4j.Log4j;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -10,8 +8,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import lombok.extern.slf4j.Slf4j;
 
-@Log4j
+@Slf4j
 public class MultitaskTester {
 
     public void invokeAllTest() {
@@ -31,11 +30,11 @@ public class MultitaskTester {
             log.info("Code point after submitting tasks to thread executor.");
 
             log.info("Getting tasks results:");
-            for(Future<String> future : taskResults) {
+            for (Future<String> future : taskResults) {
                 log.info(future.get());
             }
         } catch (InterruptedException | ExecutionException e) {
-            if (e instanceof InterruptedException )
+            if (e instanceof InterruptedException)
                 log.error("One of the task in the thread executor was interrupted: " + e.getLocalizedMessage(), e);
             else
                 log.error("Execution exception: " + e.getLocalizedMessage(), e);
@@ -49,7 +48,7 @@ public class MultitaskTester {
 
         try {
             service = Executors.newSingleThreadExecutor();
-            for(int i = 0; i < 6; i++) {
+            for (int i = 0; i < 6; i++) {
                 service.submit(this::task);
             }
         } finally {

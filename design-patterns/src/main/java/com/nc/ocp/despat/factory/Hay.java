@@ -1,11 +1,11 @@
 package com.nc.ocp.despat.factory;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class Hay extends Food {
-    private static final Logger log = Logger.getLogger(Hay.class);
 
-    public Hay(int quantity) {
+    Hay(int quantity) {
         super(quantity);
     }
 

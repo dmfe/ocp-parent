@@ -1,14 +1,13 @@
 package com.nc.ocp.concurrency.test;
 
-import lombok.extern.log4j.Log4j;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
+import lombok.extern.slf4j.Slf4j;
 
-@Log4j
+@Slf4j
 public class SyncTester {
 
     public void run() {
@@ -44,6 +43,7 @@ public class SyncTester {
 
     private interface AnimalManager {
         void incrementAndReport();
+
         String getResult();
     }
 
@@ -59,7 +59,7 @@ public class SyncTester {
 
         @Override
         public void incrementAndReport() {
-            log.info(++count);
+            log.info("{}", ++count);
             //result += (++count) + " ";
         }
     }
@@ -77,7 +77,7 @@ public class SyncTester {
 
         @Override
         public void incrementAndReport() {
-            log.info(count.incrementAndGet());
+            log.info("{}", count.incrementAndGet());
             //result.set(result.get() + count.incrementAndGet() + " ");
         }
     }
@@ -95,7 +95,7 @@ public class SyncTester {
         @Override
         public void incrementAndReport() {
             synchronized (this) {
-                log.info(++count);
+                log.info("{}", ++count);
                 //result += (++count) + " ";
             }
         }

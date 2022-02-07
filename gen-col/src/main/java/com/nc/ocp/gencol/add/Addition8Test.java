@@ -2,18 +2,16 @@ package com.nc.ocp.gencol.add;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import org.apache.log4j.Logger;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class Addition8Test {
-    private static final Logger log = Logger.getLogger(Addition8Test.class);
 
     public void run() {
         List<String> lst = new ArrayList<>();
@@ -25,7 +23,7 @@ public class Addition8Test {
         List<Integer> intLst = new ArrayList<>();
         Collections.addAll(intLst, 1, 4, 3, 8);
         log.info("Before update: " + intLst);
-        intLst.replaceAll(x -> x*2);
+        intLst.replaceAll(x -> x * 2);
         log.info("After update: " + intLst);
 
         List<String> cats = Arrays.asList("Vaska", "Muska");

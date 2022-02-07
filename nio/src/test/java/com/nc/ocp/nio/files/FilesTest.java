@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.nio.file.FileSystem;
+import com.nc.ocp.nio.exceptions.OcpNioException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,9 +13,7 @@ import java.nio.file.Paths;
 import java.nio.file.attribute.UserPrincipal;
 import java.util.List;
 import java.util.UUID;
-
-import com.nc.ocp.nio.exceptions.OcpNioException;
-
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -145,8 +143,12 @@ class FilesTest {
         assertEquals(currentMillis, fs.getLastModified(fileName));
     }
 
+    /**
+     * You should run this under superuser permissions
+     **/
     @DisplayName("Set owner.")
     @Test
+    @Disabled
     void setOwnerTest() throws Exception {
         String fileName = "test-data/chicken/feathers_" + UUID.randomUUID().toString() + ".txt";
         String ownerName = "nobody";
@@ -161,4 +163,3 @@ class FilesTest {
         assertEquals(expectedOwner, actualOwner);
     }
 }
-

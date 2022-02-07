@@ -1,12 +1,11 @@
 package com.nc.ocp.io.file;
 
-import lombok.extern.log4j.Log4j;
-
 import java.io.File;
 import java.util.Optional;
 import java.util.stream.Stream;
+import lombok.extern.slf4j.Slf4j;
 
-@Log4j
+@Slf4j
 public class FileTest {
 
     public void run() {
@@ -34,9 +33,9 @@ public class FileTest {
             } else {
                 Optional.ofNullable(file.listFiles())
                         .map(files -> {
-                            Stream.of(files).forEach(f -> log.info("\t" + f.getName()));
-                            return null;
-                        }
+                                    Stream.of(files).forEach(f -> log.info("\t" + f.getName()));
+                                    return null;
+                                }
                         ).orElse(null);
             }
         }

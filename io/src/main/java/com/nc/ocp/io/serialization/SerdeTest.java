@@ -2,19 +2,18 @@ package com.nc.ocp.io.serialization;
 
 import com.google.common.collect.ImmutableList;
 import com.nc.ocp.io.serialization.data.Animal;
-import lombok.extern.log4j.Log4j;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
-@Log4j
+@Slf4j
 public class SerdeTest {
 
     private static final String DATA_FILE_NAME = "./test-dir/serialized-objects";
 
     public void run() {
-       serializeAndDeserializeAnimals();
+        serializeAndDeserializeAnimals();
     }
 
     private void serializeAndDeserializeAnimals() {
@@ -35,7 +34,7 @@ public class SerdeTest {
             List<Animal> deserializedAnimals = serde.deserialize(dataFile, Animal.class);
 
             log.info("Deserialized animals:");
-            deserializedAnimals.forEach(log::info);
+            deserializedAnimals.forEach(animal -> log.info("{}", animal));
         } catch (IOException | ClassNotFoundException ex) {
             log.error("Error during serialization/deserialization of animals objects: " + ex.getLocalizedMessage());
         }

@@ -1,12 +1,9 @@
 package com.nc.ocp.concurrency.test;
 
-import lombok.extern.log4j.Log4j;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Deque;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
@@ -19,8 +16,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
+import lombok.extern.slf4j.Slf4j;
 
-@Log4j
+@Slf4j
 public class ConcurrentCollectionsTester {
 
     public void run() {
@@ -36,7 +34,7 @@ public class ConcurrentCollectionsTester {
         foodData.put("Penguin", 1);
         foodData.put("Flamingo", 2);
 
-        for(String key: foodData.keySet()) {
+        for (String key : foodData.keySet()) {
             foodData.remove(key);
             log.info(key + " removed.");
         }
@@ -48,19 +46,19 @@ public class ConcurrentCollectionsTester {
         Map<String, Object> map = new ConcurrentHashMap<>();
         map.put("zebra", 52);
         map.put("elephant", 63);
-        log.info(map.get("elephant"));
+        log.info("{}", map.get("elephant"));
 
         Queue<Integer> queue = new ConcurrentLinkedQueue<>();
         queue.offer(31);
-        log.info(queue.peek());
-        log.info(queue.poll());
+        log.info("{}", queue.peek());
+        log.info("{}", queue.poll());
         log.info("queue: " + queue);
 
         Deque<Integer> deque = new ConcurrentLinkedDeque<>();
         deque.offer(20);
         deque.push(4);
-        log.info(deque.peek());
-        log.info(deque.poll());
+        log.info("{}", deque.peek());
+        log.info("{}", deque.poll());
         log.info("deque: " + deque);
     }
 
@@ -93,7 +91,7 @@ public class ConcurrentCollectionsTester {
 
     private void copyOnWriteTest() {
         List<Integer> list = new CopyOnWriteArrayList<>(Arrays.asList(4, 3, 52));
-        for(Integer item : list) {
+        for (Integer item : list) {
             log.info("List item: " + item);
             list.add(9);
         }
@@ -105,7 +103,7 @@ public class ConcurrentCollectionsTester {
         // Access on any iterators are not synchronized. Therefore, it's imperative that you use a
         // synchronization block if you need to iterate over any of synchronized collection.
         synchronized (this) {
-            for(Integer item : list) {
+            for (Integer item : list) {
                 log.info("Synchronized collection test: " + item);
             }
         }

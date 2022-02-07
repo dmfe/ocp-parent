@@ -1,10 +1,9 @@
 package com.nc.ocp.io.input;
 
-import lombok.extern.log4j.Log4j;
-
 import java.io.IOException;
+import lombok.extern.slf4j.Slf4j;
 
-@Log4j
+@Slf4j
 public class InputTest {
 
     public void run() {

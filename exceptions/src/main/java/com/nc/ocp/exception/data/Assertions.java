@@ -1,9 +1,9 @@
 package com.nc.ocp.exception.data;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class Assertions {
-    private static final Logger log = Logger.getLogger(Assertions.class);
 
     private int num;
 

@@ -16,12 +16,12 @@ import java.util.List;
 import com.nc.ocp.nio.exceptions.OcpNioException;
 
 import java.util.Set;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Files
  */
-@Log4j
+@Slf4j
 class FilesSample {
 
     private static final String DATA_FOLDER = "./test-data";
@@ -77,7 +77,7 @@ class FilesSample {
 
         } catch (IOException ex) {
             String msg = "Error while copy directories: " + ex.getLocalizedMessage();
-            log.error(ex);
+            log.error(msg, ex);
             throw new OcpNioException(msg, ex);
         }
     }
@@ -94,7 +94,7 @@ class FilesSample {
             return Files.readAllLines(path, Charset.forName("UTF-16"));
         } catch (IOException ex) {
             String msg = "Error while reading file: " + ex.getLocalizedMessage();
-            log.error(ex);
+            log.error(msg, ex);
             throw new OcpNioException(msg, ex);
         }
     }
@@ -105,7 +105,7 @@ class FilesSample {
             Files.setLastModifiedTime(path, FileTime.fromMillis(epochMillis));
         } catch (IOException ex) {
             String msg = "Error while setting last modified time: " + ex.getLocalizedMessage();
-            log.error(ex);
+            log.error(msg, ex);
             throw new OcpNioException(msg, ex);
         }
     }
@@ -116,7 +116,7 @@ class FilesSample {
             return Files.getLastModifiedTime(path).toMillis();
         } catch (IOException ex) {
             String msg = "Error while getting last modified time: " + ex.getLocalizedMessage();
-            log.error(ex);
+            log.error(msg, ex);
             throw new OcpNioException(msg, ex);
         }
     }
@@ -137,7 +137,7 @@ class FilesSample {
             log.info(fileName + " changed owner (owner: " + Files.getOwner(path).getName() + ")");
         } catch (IOException ex) {
             String msg = "Error while setting owner: " + ex.getLocalizedMessage();
-            log.error(ex);
+            log.error(msg, ex);
             throw new OcpNioException(msg, ex);
         }
     }

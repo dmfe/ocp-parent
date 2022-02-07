@@ -4,18 +4,13 @@ import com.nc.ocp.despat.builder.AnimalBuilder;
 import com.nc.ocp.despat.factory.ZooKeeper;
 import com.nc.ocp.despat.immutable.Animal;
 import com.nc.ocp.despat.singleton.LlamaTrainer;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
-
 import java.util.Arrays;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class Main {
-    private static final Logger log = Logger.getLogger(Main.class);
 
-    public static void main( String[] args ) {
-        // Configure logging properties.
-        PropertyConfigurator.configure(Main.class.getClassLoader().getResourceAsStream("log4j.properties"));
-
+    public static void main(String[] args) {
         new Main().start();
     }
 

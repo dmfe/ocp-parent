@@ -2,16 +2,12 @@ package com.nc.ocp.exception;
 
 import com.nc.ocp.exception.client.Client;
 import com.nc.ocp.exception.data.Assertions;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
+import lombok.extern.slf4j.Slf4j;
 
-import java.sql.SQLException;
-
+@Slf4j
 public class Main {
-    private static final Logger log = Logger.getLogger(Main.class);
 
     public static void main(String[] args) {
-        PropertyConfigurator.configure(Main.class.getClassLoader().getResourceAsStream("log4j.properties"));
         new Main().start();
     }
 
@@ -27,9 +23,5 @@ public class Main {
         // Assertions test.
         Assertions ass = new Assertions(10);
         ass.printGuestsNumber();
-    }
-
-    private String getDataFromDatabase() throws SQLException {
-        throw new UnsupportedOperationException();
     }
 }

@@ -1,15 +1,14 @@
 package com.nc.ocp.io.stream.copy;
 
 import com.nc.ocp.io.excepions.CopyFileExceptions;
-import lombok.extern.log4j.Log4j;
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import lombok.extern.slf4j.Slf4j;
 
-@Log4j
+@Slf4j
 class ByteFileCopier extends FileCopier {
 
     ByteFileCopier(String sourceName) {
@@ -22,8 +21,8 @@ class ByteFileCopier extends FileCopier {
 
     @Override
     public void copy() {
-        try(InputStream in = new FileInputStream(source);
-            OutputStream out = new FileOutputStream(destination)) {
+        try (InputStream in = new FileInputStream(source);
+             OutputStream out = new FileOutputStream(destination)) {
             int b;
             while ((b = in.read()) != -1) {
                 out.write(b);

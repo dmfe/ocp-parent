@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration xmlns="http://logging.apache.org/log4j/2.0/config">
+    <Appenders>
+        <Console name="NIO" target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="%d{dd.MM.yyyy HH:mm:ss.SSS} [Thread: %t] %c{1} %5p : %m%n" disableAnsi="false" />
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="NIO" />
+        </Root>
+
+        <Logger name="com.nc.ocp.nio" level="trace" />
+    </Loggers>
+</Configuration>

@@ -1,7 +1,5 @@
 package com.nc.ocp.concurrency.test;
 
-import lombok.extern.log4j.Log4j;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -9,8 +7,9 @@ import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import lombok.extern.slf4j.Slf4j;
 
-@Log4j
+@Slf4j
 public class ParallelStreamTesting {
 
     public void run() {
@@ -31,21 +30,21 @@ public class ParallelStreamTesting {
     }
 
     private void parallelStreamTest() {
-        Arrays.asList(1, 2, 3, 4, 5, 6).stream().forEach(log::info);
+        Arrays.asList(1, 2, 3, 4, 5, 6).stream().forEach(e -> log.info("{}", e));
 
         log.info("----------------------");
 
-        Arrays.asList(1, 2, 3, 4, 5, 6).parallelStream().forEach(log::info);
+        Arrays.asList(1, 2, 3, 4, 5, 6).parallelStream().forEach(e -> log.info("{}", e));
 
         log.info("----------------------");
 
-        Arrays.asList(1, 2, 3, 4, 5, 6).parallelStream().forEachOrdered(log::info);
+        Arrays.asList(1, 2, 3, 4, 5, 6).parallelStream().forEachOrdered(e -> log.info("{}", e));
     }
 
     private void whaleDataCalculationTest() {
         WhaleDataCalculator dataCalculator = new WhaleDataCalculator();
         List<Integer> data = new ArrayList<>();
-        for(int i = 0; i < 4000; i++) data.add(i);
+        for (int i = 0; i < 4000; i++) data.add(i);
 
         long startTime = System.currentTimeMillis();
         long result = dataCalculator.processAllData(data);
@@ -65,12 +64,15 @@ public class ParallelStreamTesting {
 
         List<Integer> data = Collections.synchronizedList(new ArrayList<>());
         Arrays.asList(1, 2, 3, 4, 5, 6).parallelStream()
-                .map(i -> {data.add(i); return i;})
-                .forEachOrdered(log::info);
+                .map(i -> {
+                    data.add(i);
+                    return i;
+                })
+                .forEachOrdered(e -> log.info("{}", e));
 
         log.info("------");
 
-        data.forEach(log::info);
+        data.forEach(e -> log.info("{}", e));
     }
 
     private void parallelReductionsTest() {
@@ -84,11 +86,11 @@ public class ParallelStreamTesting {
 
         log.info("-----");
 
-        log.info("- op Serial: " + Arrays.asList(1, 2, 3, 4, 5, 6).stream().reduce(0, (a,b) -> a-b));
-        log.info("- op Parallel: " + Arrays.asList(1, 2, 3, 4, 5, 6).parallelStream().reduce(0, (a,b) -> a-b));
+        log.info("- op Serial: " + Arrays.asList(1, 2, 3, 4, 5, 6).stream().reduce(0, (a, b) -> a - b));
+        log.info("- op Parallel: " + Arrays.asList(1, 2, 3, 4, 5, 6).parallelStream().reduce(0, (a, b) -> a - b));
 
-        log.info("+ op Serial: " + Arrays.asList(1, 2, 3, 4, 5, 6).stream().reduce(0, (a,b) -> a+b));
-        log.info("+ op Parallel: " + Arrays.asList(1, 2, 3, 4, 5, 6).parallelStream().reduce(0, (a,b) -> a+b));
+        log.info("+ op Serial: " + Arrays.asList(1, 2, 3, 4, 5, 6).stream().reduce(0, (a, b) -> a + b));
+        log.info("+ op Parallel: " + Arrays.asList(1, 2, 3, 4, 5, 6).parallelStream().reduce(0, (a, b) -> a + b));
     }
 
     private void parallelCollectTest() {
@@ -97,16 +99,16 @@ public class ParallelStreamTesting {
         ConcurrentMap<Integer, String> map = ohMy
                 .collect(Collectors.toConcurrentMap(String::length, k -> k, (s1, s2) -> s1 + "," + s2));
 
-        log.info(map);
-        log.info(map.getClass());
+        log.info("{}", map);
+        log.info("{}", map.getClass());
 
         ohMy = Stream.of("lions", "tigers", "bears").parallel();
 
         ConcurrentMap<Integer, List<String>> groupingMap =
                 ohMy.collect(Collectors.groupingByConcurrent(String::length));
 
-        log.info(groupingMap);
-        log.info(groupingMap.getClass());
+        log.info("{}", groupingMap);
+        log.info("{}", groupingMap.getClass());
     }
 
     private static class WhaleDataCalculator {

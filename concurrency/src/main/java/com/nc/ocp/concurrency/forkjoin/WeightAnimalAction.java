@@ -1,11 +1,10 @@
 package com.nc.ocp.concurrency.forkjoin;
 
-import lombok.extern.log4j.Log4j;
-
 import java.util.Random;
 import java.util.concurrent.RecursiveAction;
+import lombok.extern.slf4j.Slf4j;
 
-@Log4j
+@Slf4j
 public class WeightAnimalAction extends RecursiveAction {
     private static final int MINIMAL_ANIMAL_NUMBER = 3;
 

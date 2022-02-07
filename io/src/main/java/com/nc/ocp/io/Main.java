@@ -6,15 +6,12 @@ import com.nc.ocp.io.output.OutputTest;
 import com.nc.ocp.io.serialization.SerdeTest;
 import com.nc.ocp.io.stream.StreamTest;
 import com.nc.ocp.io.text.TextTest;
-import lombok.extern.log4j.Log4j;
-import org.apache.log4j.PropertyConfigurator;
+import lombok.extern.slf4j.Slf4j;
 
-@Log4j
+@Slf4j
 public class Main {
 
     public static void main(String[] args) {
-        PropertyConfigurator.configure(Main.class.getClassLoader().getResourceAsStream("log4j.properties"));
-
         new Main().run();
     }
 

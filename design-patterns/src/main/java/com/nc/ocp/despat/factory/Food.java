@@ -3,11 +3,11 @@ package com.nc.ocp.despat.factory;
 public abstract class Food {
     private int quantity;
 
-    public Food(int quantity) {
+    Food(int quantity) {
         this.quantity = quantity;
     }
 
-    public int getQuantity() {
+    int getQuantity() {
         return quantity;
     }
 

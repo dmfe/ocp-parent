@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * PathsTest
  */
-@Log4j
+@Slf4j
 public class PathsTest {
 
     public void run() {
@@ -76,23 +76,23 @@ public class PathsTest {
     private void relativizeTest() {
         Path path1 = Paths.get("fish.txt");
         Path path2 = Paths.get("birds.txt");
-        log.info(path1.relativize(path2));
-        log.info(path2.relativize(path1));
+        log.info("rel path1={} path2={} result={}", path1, path2, path1.relativize(path2));
+        log.info("rel path2={} path1={} result={}", path2, path1, path2.relativize(path1));
 
         Path path3 = Paths.get("/habitat");
         Path path4 = Paths.get("/sanctuary/raven");
-        log.info(path3.relativize(path4));
-        log.info(path4.relativize(path3));
+        log.info("rel path3={} path4={} result={}", path3, path4, path3.relativize(path4));
+        log.info("rel path4={} path3={} result={}", path4, path3, path4.relativize(path3));
     }
 
     private void resolveTest() {
         Path path1 = Paths.get("/cats/../panther");
         Path path2 = Paths.get("food");
-        log.info(path1.resolve(path2));
+        log.info("resolve path1={} path2={} result={}", path1, path2, path1.resolve(path2));
 
         Path path3 = Paths.get("/cats/../panther");
         Path path4 = Paths.get("/food");
-        log.info(path3.resolve(path4));
+        log.info("resolve path3={} path4={}, result={}", path3, path4, path3.resolve(path4));
     }
 
     private void normalizeTest() {
@@ -105,8 +105,8 @@ public class PathsTest {
 
     private void toRealTest() {
         try {
-            log.info(Paths.get("test-data/zebra/food.source").toRealPath());
-            log.info(Paths.get("test-data/horse/food.txt").toRealPath());
+            log.info("To real path: {}", Paths.get("test-data/zebra/food.source").toRealPath());
+            log.info("To real path: {}", Paths.get("test-data/horse/food.txt").toRealPath());
         } catch (IOException ex) {
             log.error(ex.getLocalizedMessage(), ex);
         }

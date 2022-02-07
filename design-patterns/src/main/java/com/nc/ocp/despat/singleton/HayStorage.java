@@ -1,6 +1,6 @@
 package com.nc.ocp.despat.singleton;
 
-public class HayStorage {
+class HayStorage {
 
     private static final HayStorage instance = new HayStorage();
 
@@ -8,21 +8,21 @@ public class HayStorage {
 
     private HayStorage() {}
 
-    public static HayStorage getInstance() {
+    static HayStorage getInstance() {
         return instance;
     }
 
-    public synchronized void addHay(int amount) {
+    synchronized void addHay(int amount) {
         quantity += amount;
     }
 
-    public synchronized boolean removeHay(int amount) {
+    synchronized boolean removeHay(int amount) {
         if(quantity < amount)return false;
         quantity -= amount;
         return true;
     }
 
-    public synchronized int getHayQuantity() {
+    synchronized int getHayQuantity() {
         return quantity;
     }
 }

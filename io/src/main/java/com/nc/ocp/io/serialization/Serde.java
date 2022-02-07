@@ -1,7 +1,5 @@
 package com.nc.ocp.io.serialization;
 
-import lombok.extern.log4j.Log4j;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.EOFException;
@@ -13,11 +11,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
-@Log4j
-public class Serde<T> {
+@Slf4j
+class Serde<T> {
 
-    public void serialize(List<T> objects, File dataFile) throws IOException {
+    void serialize(List<T> objects, File dataFile) throws IOException {
         try (ObjectOutputStream out = new ObjectOutputStream(
                 new BufferedOutputStream(new FileOutputStream(dataFile))
         )) {
@@ -27,7 +26,7 @@ public class Serde<T> {
         }
     }
 
-    public List<T> deserialize(File dataFile, Class<T> clazz) throws IOException, ClassNotFoundException {
+    List<T> deserialize(File dataFile, Class<T> clazz) throws IOException, ClassNotFoundException {
         List<T> objects = new ArrayList<>();
 
         try (ObjectInputStream in = new ObjectInputStream(

@@ -1,7 +1,7 @@
 package com.nc.ocp.despat.factory;
 
-public class FoodFactory {
-    public static Food getFood(String animalName) {
+class FoodFactory {
+    static Food getFood(String animalName) {
         switch(animalName) {
             case "zebra" : return new Hay(100);
             case "rabbit" : return new Pellets(5);

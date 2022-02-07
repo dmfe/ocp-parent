@@ -1,7 +1,5 @@
 package com.nc.ocp.gencol.generics;
 
-import org.apache.log4j.Logger;
-
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,9 +7,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class GenericTest {
-    private static final Logger log = Logger.getLogger(GenericTest.class);
 
     public void run() {
         List<String> names = new ArrayList<>();
@@ -20,7 +19,7 @@ public class GenericTest {
         names.add(new Date().toString());
         printNames(names);
         printList(names);
-       //oldDaysPrintNames(names);
+        //oldDaysPrintNames(names);
 
 //        List unicorns = new ArrayList();
 //        unicorns.add(new Unicorn());
@@ -48,22 +47,25 @@ public class GenericTest {
     }
 
     private void oldDaysPrintNames(List list) {
-        for(int i = 0; i < list.size(); i++) {
-            String name = (String)list.get(i);
+        for (int i = 0; i < list.size(); i++) {
+            String name = (String) list.get(i);
             log.info(name);
         }
     }
 
     private void printDragons(List<Dragon> dragons) {
-        for(Dragon dragon : dragons) {
-            log.info(dragon);
+        for (Dragon dragon : dragons) {
+            log.info("{}", dragon);
         }
     }
 
     private static void printList(List<?> list) {
-        for(Object x : list) log.info(x);
+        for (Object x : list) log.info("{}", x);
     }
 }
 
-class Dragon {}
-class Unicorn {}
+class Dragon {
+}
+
+class Unicorn {
+}
