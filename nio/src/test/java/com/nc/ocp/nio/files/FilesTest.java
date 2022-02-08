@@ -1,5 +1,6 @@
 package com.nc.ocp.nio.files;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -10,6 +11,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.UserPrincipal;
 import java.util.List;
 import java.util.UUID;
@@ -161,5 +163,37 @@ class FilesTest {
         UserPrincipal actualOwner = Files.getOwner(path);
 
         assertEquals(expectedOwner, actualOwner);
+    }
+
+    @DisplayName("Get basic file attributes.")
+    @Test
+    void getBasicAttributesTest() {
+        String filename = "test-data/turtles/sea.txt";
+
+        BasicFileAttributes actualAttributes = fs.getBasicFileAttributes(filename);
+
+        assertAll(
+                () -> assertFalse(actualAttributes.isDirectory()),
+                () -> assertTrue(actualAttributes.isRegularFile()),
+                () -> assertFalse(actualAttributes.isSymbolicLink()),
+                () -> assertFalse(actualAttributes.isOther()),
+                () -> assertEquals(166, actualAttributes.size()),
+                () -> assertEquals("(dev=831,ino=11539057)", actualAttributes.fileKey().toString())
+        );
+    }
+
+    @DisplayName("Modify basic file attribute.")
+    @Test
+    void modifyBasicFileAttributeTest() throws Exception {
+        String filename = "test-data/turtles/ocean.txt";
+        long delta = 10_000;
+
+        long oldLastModifiedTimeMillis = fs.modifyLastModyFiedTime(filename, delta);
+
+        long expectedTime = oldLastModifiedTimeMillis + delta;
+        long actualTime = Files.readAttributes(Paths.get(filename), BasicFileAttributes.class)
+                .lastModifiedTime().toMillis();
+
+        assertEquals(expectedTime, actualTime);
     }
 }

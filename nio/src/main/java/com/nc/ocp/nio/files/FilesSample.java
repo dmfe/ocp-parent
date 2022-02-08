@@ -7,6 +7,8 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributeView;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 import java.nio.file.attribute.PosixFileAttributes;
 import java.nio.file.attribute.PosixFilePermission;
@@ -38,9 +40,7 @@ class FilesSample {
 
             return Files.isSameFile(first, second);
         } catch (IOException ex) {
-            String msg = "Error while comparing files: " + ex.getLocalizedMessage();
-            log.error(msg, ex);
-            throw new OcpNioException(msg, ex);
+            throw produceOcpNioException("Error while comparing files: ", ex);
         }
     }
 
@@ -48,9 +48,7 @@ class FilesSample {
         try {
             Files.createDirectory(Paths.get(dirName));
         } catch(IOException ex) {
-            String msg = "Error while creation directory: " + ex.getLocalizedMessage();
-            log.error(msg, ex);
-            throw new OcpNioException(msg, ex);
+            throw produceOcpNioException("Error while creation directory: ", ex);
         }
     }
 
@@ -58,9 +56,7 @@ class FilesSample {
         try {
             Files.createDirectories(Paths.get(path));
         } catch(IOException ex) {
-            String msg = "Error while creation directory: " + ex.getLocalizedMessage();
-            log.error(msg, ex);
-            throw new OcpNioException(msg, ex);
+            throw produceOcpNioException("Error while creation directory: ", ex);
         }
     }
 
@@ -76,9 +72,7 @@ class FilesSample {
                 writer.write(currentLine + "\n");
 
         } catch (IOException ex) {
-            String msg = "Error while copy directories: " + ex.getLocalizedMessage();
-            log.error(msg, ex);
-            throw new OcpNioException(msg, ex);
+            throw produceOcpNioException("Error while copy directories: ", ex);
         }
     }
 
@@ -93,9 +87,7 @@ class FilesSample {
             // memory.
             return Files.readAllLines(path, Charset.forName("UTF-16"));
         } catch (IOException ex) {
-            String msg = "Error while reading file: " + ex.getLocalizedMessage();
-            log.error(msg, ex);
-            throw new OcpNioException(msg, ex);
+            throw produceOcpNioException("Error while reading file: ", ex);
         }
     }
 
@@ -104,9 +96,7 @@ class FilesSample {
             Path path = Paths.get(fileName);
             Files.setLastModifiedTime(path, FileTime.fromMillis(epochMillis));
         } catch (IOException ex) {
-            String msg = "Error while setting last modified time: " + ex.getLocalizedMessage();
-            log.error(msg, ex);
-            throw new OcpNioException(msg, ex);
+            throw produceOcpNioException("Error while setting last modified time: ", ex);
         }
     }
 
@@ -115,9 +105,7 @@ class FilesSample {
             Path path = Paths.get(fileName);
             return Files.getLastModifiedTime(path).toMillis();
         } catch (IOException ex) {
-            String msg = "Error while getting last modified time: " + ex.getLocalizedMessage();
-            log.error(msg, ex);
-            throw new OcpNioException(msg, ex);
+            throw produceOcpNioException("Error while getting last modified time: ", ex);
         }
     }
 
@@ -136,10 +124,58 @@ class FilesSample {
             Files.setOwner(path, owner);
             log.info(fileName + " changed owner (owner: " + Files.getOwner(path).getName() + ")");
         } catch (IOException ex) {
-            String msg = "Error while setting owner: " + ex.getLocalizedMessage();
-            log.error(msg, ex);
-            throw new OcpNioException(msg, ex);
+            throw produceOcpNioException("Error while setting owner: ", ex);
         }
+    }
+
+    BasicFileAttributes getBasicFileAttributes(String filename) {
+        try {
+            Path path = Paths.get(filename);
+
+            BasicFileAttributes data = Files.readAttributes(path, BasicFileAttributes.class);
+            log.info("Attributes of {}", path.getFileName());
+            log.info("Is path a directory {}", data.isDirectory());
+            log.info("Is path a regular file {}", data.isRegularFile());
+            log.info("Is path a symbolic link {}", data.isSymbolicLink());
+            log.info("Path not file, directory, nor symbolic link {}", data.isOther());
+
+            log.info("Size {}", data.size());
+            log.info("Creation date/time {}", data.creationTime());
+            log.info("Last modified date/time {}", data.lastModifiedTime());
+            log.info("Last accessed date/time {}", data.lastAccessTime());
+            log.info("Unique file identifier (if available) {}", data.fileKey());
+
+            return data;
+        } catch (IOException ex) {
+            throw produceOcpNioException("Error while getting basic file attributes: ", ex);
+        }
+    }
+
+    long modifyLastModyFiedTime(String filename, long timeMillis) {
+        try {
+            Path path = Paths.get(filename);
+
+            BasicFileAttributeView view = Files.getFileAttributeView(path, BasicFileAttributeView.class);
+            BasicFileAttributes data = view.readAttributes();
+
+            FileTime lastModifiedTime = data.lastModifiedTime();
+            log.info("{} last modified time: {}", path.getFileName(), lastModifiedTime);
+
+            FileTime newLastModifiedTime = FileTime.fromMillis(lastModifiedTime.toMillis() + timeMillis);
+            log.info("{} new last modified time: {}", path.getFileName(), newLastModifiedTime);
+
+            view.setTimes(newLastModifiedTime, null, null);
+
+            return lastModifiedTime.toMillis();
+        } catch (IOException ex) {
+            throw produceOcpNioException("Error while modifying basic file attributes: ", ex);
+        }
+    }
+
+    private OcpNioException produceOcpNioException(String msg, Exception e) {
+        String message = msg + e.getLocalizedMessage();
+        log.error(msg, e);
+        return new OcpNioException(message, e);
     }
 }
 
