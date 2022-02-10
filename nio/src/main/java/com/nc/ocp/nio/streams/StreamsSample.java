@@ -1,6 +1,8 @@
 package com.nc.ocp.nio.streams;
 
-import com.nc.ocp.nio.exceptions.OcpNioException;
+import static com.nc.ocp.nio.NioConstants.DATA_FOLDER;
+import static com.nc.ocp.nio.exceptions.OcpNioUtils.produceOcpNioException;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -11,8 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 class StreamsSample {
-
-    private static final String DATA_FOLDER = "./test-data";
 
     List<String> pathWalk(String directory) {
         Path path = Paths.get(DATA_FOLDER + "/" + directory);
@@ -29,9 +29,4 @@ class StreamsSample {
         }
     }
 
-    private OcpNioException produceOcpNioException(String msg, Exception e) {
-        String message = msg + e.getLocalizedMessage();
-        log.error(msg, e);
-        return new OcpNioException(message, e);
-    }
 }

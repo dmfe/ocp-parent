@@ -188,7 +188,7 @@ class FilesTest {
         String filename = "test-data/turtles/ocean.txt";
         long delta = 10_000;
 
-        long oldLastModifiedTimeMillis = fs.modifyLastModyFiedTime(filename, delta);
+        long oldLastModifiedTimeMillis = fs.modifyLastModyfiedTime(filename, delta);
 
         long expectedTime = oldLastModifiedTimeMillis + delta;
         long actualTime = Files.readAttributes(Paths.get(filename), BasicFileAttributes.class)

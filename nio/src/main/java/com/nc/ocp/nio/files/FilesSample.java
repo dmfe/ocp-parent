@@ -1,5 +1,8 @@
 package com.nc.ocp.nio.files;
 
+import static com.nc.ocp.nio.NioConstants.DATA_FOLDER;
+import static com.nc.ocp.nio.exceptions.OcpNioUtils.produceOcpNioException;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -14,9 +17,6 @@ import java.nio.file.attribute.PosixFileAttributes;
 import java.nio.file.attribute.PosixFilePermission;
 import java.nio.file.attribute.UserPrincipal;
 import java.util.List;
-
-import com.nc.ocp.nio.exceptions.OcpNioException;
-
 import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,8 +25,6 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 class FilesSample {
-
-    private static final String DATA_FOLDER = "./test-data";
 
     boolean checkFile(String resource) {
         Path cpData = Paths.get(DATA_FOLDER + "/" + resource);
@@ -47,7 +45,7 @@ class FilesSample {
     void createDirectory(String dirName) {
         try {
             Files.createDirectory(Paths.get(dirName));
-        } catch(IOException ex) {
+        } catch (IOException ex) {
             throw produceOcpNioException("Error while creation directory: ", ex);
         }
     }
@@ -55,7 +53,7 @@ class FilesSample {
     void createDirectories(String path) {
         try {
             Files.createDirectories(Paths.get(path));
-        } catch(IOException ex) {
+        } catch (IOException ex) {
             throw produceOcpNioException("Error while creation directory: ", ex);
         }
     }
@@ -65,7 +63,7 @@ class FilesSample {
         Path dest = Paths.get("test-data/horse/b");
 
         try (BufferedReader reader = Files.newBufferedReader(source, Charset.forName("US-ASCII"));
-                BufferedWriter writer = Files.newBufferedWriter(dest, Charset.forName("UTF-16"))) {
+             BufferedWriter writer = Files.newBufferedWriter(dest, Charset.forName("UTF-16"))) {
 
             String currentLine;
             while ((currentLine = reader.readLine()) != null)
@@ -151,7 +149,7 @@ class FilesSample {
         }
     }
 
-    long modifyLastModyFiedTime(String filename, long timeMillis) {
+    long modifyLastModyfiedTime(String filename, long timeMillis) {
         try {
             Path path = Paths.get(filename);
 
@@ -171,11 +169,4 @@ class FilesSample {
             throw produceOcpNioException("Error while modifying basic file attributes: ", ex);
         }
     }
-
-    private OcpNioException produceOcpNioException(String msg, Exception e) {
-        String message = msg + e.getLocalizedMessage();
-        log.error(msg, e);
-        return new OcpNioException(message, e);
-    }
 }
-
