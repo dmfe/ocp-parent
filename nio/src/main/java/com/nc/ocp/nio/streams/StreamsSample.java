@@ -25,8 +25,35 @@ class StreamsSample {
                     .collect(Collectors.toList());
 
         } catch (IOException ex) {
-            throw produceOcpNioException("Exception while walking path: ", ex);
+            throw produceOcpNioException("Error while walking path: ", ex);
         }
     }
 
+    List<String> searchInDirectory(String directory, long lastModifiedTime) {
+        Path path = Paths.get(DATA_FOLDER + "/" + directory);
+
+        try {
+            return Files.find(path, 10, (p, attrs) ->
+                    p.toString().endsWith(".java") && attrs.lastModifiedTime().toMillis() > lastModifiedTime)
+                    .peek(p -> log.info("{}", p))
+                    .map(Path::toString)
+                    .collect(Collectors.toList());
+        } catch (IOException ex) {
+            throw produceOcpNioException("Error while searching in directory: ", ex);
+        }
+    }
+
+    List<String> listDirectoryFiles(String directory) {
+        Path path = Paths.get(DATA_FOLDER + "/" + directory);
+
+        try {
+            return Files.list(path)
+                    .filter(p -> !Files.isDirectory(p))
+                    .map(Path::toString)
+                    .peek(log::info)
+                    .collect(Collectors.toList());
+        } catch (IOException ex) {
+            throw produceOcpNioException("Error while listing directory: ", ex);
+        }
+    }
 }
