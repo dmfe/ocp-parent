@@ -56,4 +56,17 @@ class StreamsSample {
             throw produceOcpNioException("Error while listing directory: ", ex);
         }
     }
+
+    List<String> filterFileContent(String directory, String filter) {
+        Path path = Paths.get(DATA_FOLDER + "/" + directory);
+
+        try {
+            return Files.lines(path)
+                    .filter(s -> s.contains(filter))
+                    .peek(log::info)
+                    .collect(Collectors.toList());
+        } catch (IOException ex) {
+            throw produceOcpNioException("Error while reading content of the file " + path, ex);
+        }
+    }
 }

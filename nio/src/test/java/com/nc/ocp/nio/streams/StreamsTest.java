@@ -2,6 +2,7 @@ package com.nc.ocp.nio.streams;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.sun.jdi.connect.Connector;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -55,5 +56,18 @@ class StreamsTest {
         List<String> actualFiles = ss.listDirectoryFiles("duck");
 
         assertEquals(expectedFiles, actualFiles);
+    }
+
+    @DisplayName("File content filtering.")
+    @Test
+    void filterFileContentTest() {
+        List<String> expectedLines = List.of(
+                "WARN No database could be detected",
+                "WARN Performing manual recovery"
+        );
+
+        List<String> actualLines = ss.filterFileContent("fish/sharks.log", "WARN");
+
+        assertEquals(expectedLines, actualLines);
     }
 }
